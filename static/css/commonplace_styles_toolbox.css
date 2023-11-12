@@ -3617,7 +3617,6 @@ textarea.form-control-lg {
 .badge::before {
   content: '';
   vertical-align: middle;
-  height: 100%;
 }
 
 .badge-text {
