@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} Update project {% endblock %}
+
+{% block content %}
+{% include "includes/sidebar.html" %}
+
+  <div class="row">
+    <header>
+      <div class="page-header min-height-300">
+        <span class="mask bg-gradient-warning opacity-4"></span>
+      </div>
+    </header>
+
+    <section class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+      <div class="py-sm-7 py-5 position-relative">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 mx-auto">
+              <div class="col-lg-9 col-md-9 z-index-2 position-relative px-md-1 px-sm-5 mx-auto mb-2">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h3 class="mb-2 mx-auto font-weight-bold"> Update project </h3>
+                </div>
+                <br><br>
+                <form role="form" method="post" action="">
+                  {% csrf_token %}
+                  <div class="form-group row">
+                    <div class="col mt-2">
+                      {{ form.name|as_crispy_field }}
+                    </div>
+                    <div class="col mt-n3">
+                      <label>Tags</label>
+                      <input type="input" data-role="tagsinput" class="form-control" name="tags">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col mt-2">
+                      {{ form.budget|as_crispy_field }}
+                    </div>
+                    <div class="col mt-2 project-form-custom">
+                      {{ form.funds_used|as_crispy_field }}
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col mt-n2">
+                      {{ form.time_constraints|as_crispy_field }}
+                    </div>
+                  </div>
+                  {{ form.depiction|as_crispy_field }}
+                  <div class="form-group row">
+                    <div class="col mt-n2">
+                      {{ form.team|as_crispy_field }}
+                    </div>
+                    <div class="col mt-n2 project-form-custom">
+                      {{ form.project_category|as_crispy_field }}
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-3 mt-2">
+                      <div style="display: inline-block; margin-left: 25px;">
+                        <p class="font-weight-bold small">Project blocks</p>
+                      </div>
+                      <div class="form-check">
+                        {% for block in existing_blocks %}
+                          <div class="form-check">
+                            <input class="form-check-input mb-4" type="checkbox" name="existing_project_blocks" value="{{ block.id }}" data-block-id="{{ block.id }}" checked>
+                            <label class="form-check-label mb-4">{{ block.name }}</label>
+                          </div>
+                        {% endfor %}
+                      </div>
+                      <div class="form-check">
+                        {% for block in predefined_blocks %}
+                          {% if block.name not in existing_names %}
+                            <div class="form-check">
+                              <input class="form-check-input mb-4" type="checkbox" name="new_project_blocks" value="{{ block.index }}" data-block-id="{{ block.index }}">
+                              <label class="form-check-label mb-4">{{ block.name }}</label>
+                            </div>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <div class="col-3 mt-2">
+                      <div style="display: inline-block; margin-left: 30px;">
+                        <p class="font-weight-bold small">Total tasks</p>
+                      </div>
+                      <div class="form-check">
+                        {% for block in existing_blocks %}
+                          <input type="number" id="block_{{ block.id }}_total_tasks" name="block_{{ block.id }}_total_tasks" value="{{ block.total_tasks }}" class="form-control mb-2" data-block-id="{{ block.id }}">
+                        {% endfor %}
+                      </div>
+                      <div class="form-check">
+                        {% for block in predefined_blocks %}
+                          {% if block.name not in existing_names %}
+                            <input type="number" id="new_block_{{ block.index }}_total_tasks" name="new_block_{{ block.index }}_total_tasks" value="{{ block.total_tasks }}" class="form-control mb-2" data-block-id="{{ block.id }}">
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <div class="col-3 mt-2">
+                      <div style="display: inline-block; margin-left: 30px;">
+                        <p class="font-weight-bold small">Completed tasks</p>
+                      </div>
+                      <div class="form-check">
+                        {% for block in existing_blocks %}
+                          <input type="number" id="block_{{ block.id }}_completed_tasks" name="block_{{ block.id }}_completed_tasks" value="{{ block.completed_tasks }}" class="form-control mb-2" data-block-id="{{ block.id }}">
+                        {% endfor %}
+                      </div>
+                      <div class="form-check">
+                        {% for block in predefined_blocks %}
+                          {% if block.name not in existing_names %}
+                            <input type="number" id="new_block_{{ block.index}}_completed_tasks" name="new_block_{{ block.index }}_completed_tasks" value="{{ block.completed_tasks }}" class="form-control mb-2" data-block-id="{{ block.id }}">
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <div class="col-2 mb-2 mt-2">
+                      <div class="form-check">
+                        {{ form.priority|as_crispy_field }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <input type="submit" class="btn btn-lg bg-gradient-dark mt-4 mb-0" value="Submit">
+                    <a href="{% url 'assignment_handler:dashboard' %}" class="btn bg-gradient-secondary btn-lg mt-4 mb-0 mx-3">Cancel</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+{% endblock content %}

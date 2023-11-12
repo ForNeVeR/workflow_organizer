@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_additional %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/project_detail.css' %}">
+{% endblock %}
+
+{% block title %} {{ project.name }} {% endblock %}
+
+{% block content %}
+
+{% include "includes/sidebar.html" %}
+
+  <div class="header pt-10" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 30vh;">
+    <div style="margin-top: 90px; margin-bottom: 5px;">
+      <h2 class="text-primary font-weight-bolder text-center mb-4" style="margin-top: 0.3em; font-size: 40px">Project details</h2>
+      <h5 class="text-center fw-semibold mb-6" style="font-size: 23px">Patterned information about project dispensation</h5>
+    </div>
+  </div>
+  <section class="pt-sm-8 pb-5 mt-6 position-relative bg-gradient-azure overflow-hidden parental-widget">
+    <div class="position-absolute w-100 z-inde-1 top-0 mt-n3">
+      <svg width="100%" viewBox="0 -2 1920 157" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>wave-down</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Artboard" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="wave-down">
+              <path d="M0,60.8320331 C299.333333,115.127115 618.333333,111.165365 959,47.8320321 C1299.66667,-15.5013009 1620.66667,-15.2062179 1920,47.8320331 L1920,156.389409 L0,156.389409 L0,60.8320331 Z" id="Path-Copy-2" transform="translate(960.000000, 78.416017) rotate(180.000000) translate(-960.000000, -78.416017)"></path>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+    {% if user.is_authenticated %}
+      <li style="box-shadow: 0 0.3125rem 0.625rem 0 rgba(51, 153, 255, 0.32); width: 50px; float: right;" class="card dropdown dropdown-hover mx-2">
+        <a class="my-2 mx-3 cursor-pointer align-items-center" id="dropdownMenuDocs" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-menu-button-wide" viewBox="0 0 16 16">
+            <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v2A1.5 1.5 0 0 1 14.5 5h-13A1.5 1.5 0 0 1 0 3.5v-2zM1.5 1a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-13z"/>
+            <path d="M2 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm10.823.323-.396-.396A.25.25 0 0 1 12.604 2h.792a.25.25 0 0 1 .177.427l-.396.396a.25.25 0 0 1-.354 0zM0 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8zm1 3v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2H1zm14-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2h14zM2 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+          </svg>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-animation dropdown-md dropdown-md-responsive mt-0 mt-lg-3 p-3 border-radius-lg" aria-labelledby="dropdownMenuDocs">
+          <div class="d-none d-lg-block">
+            <ul class="list-group">
+              <li class="nav-item list-group-item border-0 p-0">
+                <a class="dropdown-item py-2 ps-3 border-radius-md" target="_blank" href="{% url 'assignment_handler:project-update' pk=project.id %}">
+                  <h6 class="dropdown-header text-dark font-weight-bolder justify-content-cente align-items-center p-0">Edit project</h6>
+                </a>
+              </li>
+              <li class="nav-item list-group-item border-0 p-0">
+                <a class="dropdown-item py-2 ps-3 border-radius-md" target="_blank" href="{% url 'assignment_handler:project-delete' pk=project.id %}">
+                  <h6 class="dropdown-header text-dark font-weight-bolder justify-content-cente align-items-center p-0">Delete project</h6>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </ul>
+      </li>
+    {% endif %}
+    <div style="margin-top: 70px;">
+      <section>
+        <div class="grid-container">
+          <div class="grid-item">
+            <h2 class="fw-semibold text-center mb-4 custom-heading">General information</h2>
+            <div class="container ps-0">
+              <div class="row project name mt-2">
+                <div class="col-6">
+                  <p class="fw-bold">Project name</p>
+                </div>
+                <div class="col-6">
+                  <p class="fw-bold" style="margin-left: -5px; color: green">{{ project.name }}</p>
+                </div>
+              </div>
+              <div class="row project category mt-3">
+                <div class="col-6">
+                  <p class="fw-bold">Project category</p>
+                </div>
+                <div class="col-6">
+                  <p class="text-primary" style="margin-left: -5px; font-style: italic;">#{{ project.project_category }}</p>
+                </div>
+              </div>
+              <div class="row project team mt-3">
+                <div class="col-6">
+                  <p class="mb-0 d-flex align-items-center">
+                    <span class="fw-bold me-2">Team</span>
+                  </p>
+                </div>
+                <div class="col-6">
+                  {% if project.team %}
+                  <div class="d-flex align-items-start ms-2">
+                    <a href="{% url 'assignment_handler:team-detail' pk=project.team.id %}" class="avatar ms-3 avatar-sm rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ project.team.name }}">
+                      <p class="text-muted me-2 mt-1 fw-semibold">
+                        <span class="ms-3 unique-link" style="color: blue; text-transform: capitalize;">{{ project.team.name }}</span>
+                      </p>
+                    </a>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="row priority mt-3">
+                <div class="col-6">
+                  <p class="fw-bold">Priority</p>
+                </div>
+                {% if project.priority in "U" %}
+                  <div class="col-6">
+                    <span class="badge bg-danger text-uppercase fw-semibold">{{ project.get_priority_display }}</span>
+                  </div>
+                {% elif project.priority in "A" %}
+                  <div class="col-6">
+                    <span class="badge bg-warning text-uppercase fw-semibold">{{ project.get_priority_display }}</span>
+                  </div>
+                {% else %}
+                  <div class="col-6">
+                    <span class="badge bg-success text-uppercase fw-semibold">{{ project.get_priority_display }}</span>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="tag-info row mt-3">
+                <div class="col-6">
+                  <p class="fw-bold">Tags</p>
+                </div>
+                <div class="tag-list col-6">
+                  <div class="dropdown">
+                    {% for tag in project.tags.all %}
+                      <a style="color: white; background-color: rgba(2, 124, 199, 0.8); border: 1px solid rgba(60, 199, 255, .2); font-size: 10px; height: 22px; padding: 3px; margin: 0;" class="btn button-sm font-weight-bold mb-2">
+                        {{ tag.name }}
+                      </a>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grid-item">
+            <h2 class="fw-semibold text-center mb-4 custom-heading">Current phase</h2>
+            <div class="phase-widget">
+              <div class="row phase name">
+                <div class="col-4">
+                  <p class="fw-bold">Phase name</p>
+                </div>
+                {% if current_phase.name == "Initiation and planning phase" %}
+                <div class="col-8">
+                  <span class="badge bg-danger" style="color: white">{{ current_phase.name }}</span>
+                </div>
+                {% elif current_phase.name == "Execution" %}
+                <div class="col-8">
+                  <span class="badge bg-warning" style="color: white">{{ current_phase.name }}</span>
+                </div>
+                {% else %}
+                <div class="col-8">
+                  <span class="badge bg-success" style="color: white">{{ current_phase.name }}</span>
+                </div>
+                {% endif %}
+                <div>
+                  <p class="fw-bold">Phase depiction</p>
+                  <div class="flex-container">
+                    <div class="depiction-box">
+                      <span class="phase-depiction">
+                        {{ current_phase.depiction }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grid-item">
+            <h2 class="fw-semibold text-center mb-4 custom-heading">Progress by blocks</h2>
+            {% for block in project.projectblock_set.all %}
+            <tr>
+              <p class="fw-semibold mb-3" style="margin-top: 35px;">{{ block.name }}</p>
+              <td>
+                <div class="progress-wrapper">
+                  <div class="progress-info mb-1">
+                    <div class="progress-percentage">
+                      <span class="text-xs font-weight-bolder text-primary">{{ block.get_block_progress|floatformat:2 }}%</span>
+                    </div>
+                  </div>
+                  <div style="width: 180px;" class="progress progress-augmenting">
+                    <div class="custom-progress-bar bg-gradient-primary w-50%" role="progressbar" aria-valuenow="{{ block.get_block_progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ block.get_block_progress }}%;"></div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+           {% endfor %}
+          </div>
+          <div class="grid-item">
+            <h2 class="fw-semibold text-center mb-4 custom-heading">Ultimate progress</h2>
+            <tr>
+              <p class="fw-bold mb-0 mt-8 mb-4">Completion of the project</p>
+              <td>
+                <div class="progress-wrapper">
+                  <div class="progress-info mb-1">
+                    <div class="progress-percentage">
+                      <span class="text-xs font-weight-bolder text-primary">{{ project.get_project_progress|floatformat:2 }}%</span>
+                    </div>
+                  </div>
+                  <div style="width: 180px;" class="progress progress-augmenting">
+                    <div class="custom-progress-bar bg-gradient-primary w-50%" role="progressbar" aria-valuenow="{{ project.progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ project.get_project_progress }}%;"></div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </div>
+          <div class="grid-item">
+            <h2 class="fw-semibold text-center mb-4 custom-heading">Fiscal information</h2>
+            <div class="row mt-7">
+              <div class="col">
+                <p class="fw-bold">Budget</p>
+              </div>
+              <div class="col">
+                <p class="fw-semibold font-weight-bolder text-primary" style="font-size: 15px">{{ project.budget|floatformat:2 }}$</p>
+              </div>
+            </div>
+            {% if used_text %}
+              <div class="row mt-4" style="height: 25px;">
+                <div class="col">
+                  <p class="text-sm fw-semibold text-primary">{{ used_text }}</p>
+                </div>
+              </div>
+            {% endif %}
+            {% if overrun_text %}
+              <div class="row mt-3" style="height: 25px;">
+                <div class="col">
+                  <p>{{ overrun_text }}</p>
+                </div>
+              </div>
+            {% endif %}
+            <div class="row">
+              <div class="col">
+                {% if overrun %}
+                  <div class="custom-progress-checking">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{ overrun_percent }}%;" aria-valuenow="{{ overrun_percent }}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                {% else %}
+                  <div class="custom-progress-checking">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ progress_percent }}%;" aria-valuenow="{{ progress_percent }}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="grid-item">
+            <h2 class="fw-semibold text-center mb-4 custom-heading">Time constraints</h2>
+            <div class="row mt-5">
+              <div class="col-5">
+                <p class="fw-bold">Drop dead date</p>
+              </div>
+              <div class="col-7">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                  <path fill="red" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                  <path fill="red" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                </svg>
+                <span class="fw-bold text-primary" style="font-size: smaller">{{ project.time_constraints }}</span>
+              </div>
+            </div>
+            <div class="deadline-info mt-3">
+              {% if days_left %}
+                <div class="deadline-normal">
+                  <p class="fw-semibold">Left until drop dead date</p>
+                  <div hidden class="timer-value">{{ project.time_constraints }}</div>
+                  <script class="timer_js" src="{% static 'js/countdown_timer.js' %}"></script>
+                </div>
+              {% elif passed_deadline %}
+                <div class="project-deadline">
+                  The project is overdue!
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="widget">
+          <h5 class="h5 mb-4 mt-2">Depiction</h5>
+          <p style="font-size: 17px;">{{ project.depiction }}</p>
+        </div>
+      </section>
+    </div>
+    <div style="height: 80px;"></div>
+    <div class="position-absolute w-100 bottom-0">
+      <svg width="100%" viewBox="0 -1 1920 166" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>wave-up</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Artboard" transform="translate(0.000000, 5.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="wave-up" transform="translate(0.000000, -5.000000)">
+              <path d="M0,70 C298.666667,105.333333 618.666667,95 960,39 C1301.33333,-17 1621.33333,-11.3333333 1920,56 L1920,165 L0,165 L0,70 Z" id="Path" fill="#fff"></path>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+{% endblock content%}

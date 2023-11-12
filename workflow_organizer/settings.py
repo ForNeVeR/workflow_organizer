@@ -61,7 +61,7 @@ ROOT_URLCONF = "workflow_organizer.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -74,8 +74,11 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "workflow_organizer.wsgi.application"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+WSGI_APPLICATION = "workflow_organizer.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
