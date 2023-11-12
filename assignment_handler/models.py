@@ -50,7 +50,7 @@ class Worker(AbstractUser):
     def __str__(self) -> str:
         return f"{self.username} ({self.first_name} {self.last_name})"
 
-    def finished_tasks(self) -> QuerySet:
+    def completed_tasks(self) -> QuerySet:
         return (
             self.tasks.annotate(assignees_count=Count("assignees"))
             .filter(is_completed=True, assignees_count__gt=0)
@@ -112,9 +112,6 @@ class Project(models.Model):
     funds_used = models.DecimalField(
         decimal_places=2, max_digits=8, default=0, blank=True
     )
-    progress = models.DecimalField(
-        decimal_places=2, max_digits=5, null=True, blank=True, default=0
-    )
     tags = TaggableManager(blank=True)
 
     def get_project_progress(self):
@@ -135,11 +132,11 @@ class Project(models.Model):
         return round(avg_progress, 2)
 
     def get_current_phase(self):
-        if self.progress == 0:
+        if self.get_project_progress() == 0:
             return "Initiation and planning phase"
-        elif 0 < self.progress < 100:
+        elif 0 < self.get_project_progress() < 100:
             return "Execution phase"
-        elif self.progress == 100:
+        elif self.get_project_progress() == 100:
             return "Implementation and closure phase"
         else:
             return "Unknown phase"

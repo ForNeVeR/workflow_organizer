@@ -218,6 +218,7 @@ class WorkersListView(LoginRequiredMixin, generic.ListView):
 
         top_workers = context["object_list"][:3]
         other_workers = context["object_list"][3:]
+        print(other_workers)
 
         first_place_worker = top_workers[0] if top_workers else None
         second_place_worker = top_workers[1] if len(top_workers) > 1 else None
@@ -225,8 +226,8 @@ class WorkersListView(LoginRequiredMixin, generic.ListView):
 
         context.update(
             {
-                "top_users": top_workers,
-                "other_users": other_workers,
+                "top_workers": top_workers,
+                "other_workers": other_workers,
                 "first_place_worker": first_place_worker,
                 "second_place_worker": second_place_worker,
                 "third_place_worker": third_place_worker,
@@ -490,7 +491,7 @@ class ProjectDetailView(generic.DetailView):
             context["used_text"] = f"Used {used_percent:.2f}% of the budget"
             context["progress_percent"] = progress_percent
 
-        context["completed_projects"] = Project.objects.filter(progress=100).count()
+        context["completed_projects"] = sum(1 for p in Project.objects.all() if p.get_project_progress() == 100)
 
         return context
 
@@ -1255,26 +1256,22 @@ class ProjectTrackingPanelView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         total_projects = Project.objects.all()
-        completed_projects_number = Project.objects.filter(progress=100).count()
-        completed_projects = Project.objects.filter(progress=100)
-        uncompleted_projects = Project.objects.filter(~Q(progress=100))
+        completed_projects_number = len([p for p in Project.objects.all() if p.get_project_progress() == 100])
+        completed_projects = list(filter(lambda x: x.get_project_progress() == 100, Project.objects.all()))
+        uncompleted_projects = list(filter(lambda x: x.get_project_progress() != 100, Project.objects.all()))
         average_progress_uncompleted = calculate_average_progress(uncompleted_projects)
-        (
-            predominant_status_completed,
-            average_percent_completed,
-        ) = budget_status_completed(completed_projects)
-        (
-            predominant_status_uncompleted,
-            average_percent_uncompleted,
-        ) = budget_status_uncompleted(uncompleted_projects)
+        predominant_status_completed, average_percent_completed = budget_status_completed(completed_projects)
+        predominant_status_uncompleted, average_percent_uncompleted = budget_status_uncompleted(uncompleted_projects)
+        print(average_percent_completed)
+        print(predominant_status_completed)
 
         progress_list = []
 
         for project in Project.objects.all():
-            if project.progress == 100:
+            if project.get_project_progress() == 100:
                 progress_list.append(100)
-            elif project.progress:
-                progress_list.append(project.progress)
+            elif project.get_project_progress():
+                progress_list.append(project.get_project_progress())
             else:
                 progress_list.append(0)
 
@@ -1288,9 +1285,9 @@ class ProjectTrackingPanelView(TemplateView):
                 ),
                 "funds": Project.objects.values_list("budget", flat=True),
                 "average_progress_uncompleted": average_progress_uncompleted,
-                "predominant_status_completed": predominant_status_completed,
-                "average_percent_completed": average_percent_completed,
                 "predominant_status_uncompleted": predominant_status_uncompleted,
+                "average_percent_completed": average_percent_completed,
+                "predominant_status_completed": predominant_status_completed,
                 "average_percent_uncompleted": average_percent_uncompleted,
             }
         )

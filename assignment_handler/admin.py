@@ -50,7 +50,6 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "time_constraints",
-        "progress",
         "priority",
         "project_category",
         "team",
@@ -63,7 +62,7 @@ class ProjectAdmin(admin.ModelAdmin):
         return blocks
 
     project_blocks_display.short_description = "Project Blocks"
-    list_filter = ("progress", "priority", "project_category", "tags__name")
+    list_filter = ("priority", "project_category", "tags__name")
     search_fields = ("name",)
 
     def tag_list(self, project_object):

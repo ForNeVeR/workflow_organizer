@@ -268,7 +268,6 @@ class ProjectForm(forms.ModelForm):
         max_digits=8,
         required=False,
     )
-
     tags = TagField(required=False)
 
     class Meta:
@@ -283,7 +282,6 @@ class ProjectForm(forms.ModelForm):
             "project_category",
             "budget",
             "funds_used",
-            "progress",
             "tags",
         ]
 
