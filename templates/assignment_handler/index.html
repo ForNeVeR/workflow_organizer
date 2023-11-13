@@ -3,7 +3,7 @@
 {% block title %} Home {% endblock title %}
 
 {% block content %}
-  {% include 'includes/sidebar.html' %}
+  {% include "includes/sidebar.html" %}
 
   <header class="bg-gradient-dark">
     <div class="page-header section-height-75" style="height: 500px; background-image: url('static/img/backgrounds/index.jpeg');">
@@ -102,7 +102,7 @@
                 </div>
                 <p>
                   Increase your chances to be efficient!
-                  During recent year <strong class="fw-semibold">{{ num_projects }} projects </strong> were competed successfully.
+                  Owing to our resourceful venue  <strong class="fw-semibold">{{ num_projects }} projects </strong> were successfully initiated and are now in various stages of progress
                 </p>
                 <a href="{% url 'assignment_handler:dashboard' %}" style="text-decoration: none;">Find out more
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
