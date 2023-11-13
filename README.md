@@ -25,3 +25,9 @@ python manage.py runserver
 * Ability to create teams and projects
 * Maintaining your Task panel and Project tracking panel
 * Sorting assignments by tags
+
+## Demo
+
+![Task panel interface](demo/task_panel.png)
+![Dashboard interface](demo/dashboard.png)
+![Project tracking interface](demo/project_tracking_panel.png)
