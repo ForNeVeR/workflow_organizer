@@ -218,7 +218,6 @@ class WorkersListView(LoginRequiredMixin, generic.ListView):
 
         top_workers = context["object_list"][:3]
         other_workers = context["object_list"][3:]
-        print(other_workers)
 
         first_place_worker = top_workers[0] if top_workers else None
         second_place_worker = top_workers[1] if len(top_workers) > 1 else None
@@ -1262,8 +1261,6 @@ class ProjectTrackingPanelView(TemplateView):
         average_progress_uncompleted = calculate_average_progress(uncompleted_projects)
         predominant_status_completed, average_percent_completed = budget_status_completed(completed_projects)
         predominant_status_uncompleted, average_percent_uncompleted = budget_status_uncompleted(uncompleted_projects)
-        print(average_percent_completed)
-        print(predominant_status_completed)
 
         progress_list = []
 
