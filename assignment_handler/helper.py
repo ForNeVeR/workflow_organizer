@@ -1,9 +1,13 @@
-def calculate_average_progress(projects):
+from assignment_handler.models import Project
+from typing import List, Tuple, Union
+
+
+def calculate_average_progress(projects: List[Project]) -> float:
     total_progress = 0
     total_projects = len(projects)
 
     if total_projects == 0:
-        return 0
+        return 0.00
 
     for project in projects:
         total_progress += project.get_project_progress()
@@ -12,7 +16,7 @@ def calculate_average_progress(projects):
     return average_progress
 
 
-def budget_status_completed(projects):
+def budget_status_completed(projects: List[Project]) -> Tuple[str, float]:
     if not projects:
         return "There are no completed projects", False
 
@@ -38,7 +42,7 @@ def budget_status_completed(projects):
     return predominant_status, gross_percent
 
 
-def budget_status_uncompleted(projects):
+def budget_status_uncompleted(projects: List[Project]) -> Union[Tuple[str, float], Tuple[str, bool]]:
     if not projects:
         return "There are no uncompleted projects", False
 
