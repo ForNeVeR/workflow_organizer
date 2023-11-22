@@ -1,0 +1,2 @@
+from .test_views import AssignmentHandlerViewsTestCase
+from .test_helper import AssignmentHandlerHelperTestCase
