@@ -78,6 +78,11 @@ class WorkerCreateForm(UserCreationForm):
 
     rating_points = forms.IntegerField(initial=0, required=False)
 
+    def clean_username(self):
+        if self.instance and self.instance.username == self.cleaned_data["username"]:
+            return self.cleaned_data["username"]
+        return super().clean_username()
+
     class Meta(UserCreationForm.Meta):
         model = Worker
         fields = UserCreationForm.Meta.fields + (
@@ -261,7 +266,7 @@ class ProjectForm(forms.ModelForm):
     )
     funds_used = forms.DecimalField(
         widget=forms.NumberInput(
-            attrs={"style": "pa" "" "dding: 10px;", "placeholder": "Funds used"}
+            attrs={"style": "padding: 10px;", "placeholder": "Funds used"}
         ),
         label="",
         decimal_places=2,
